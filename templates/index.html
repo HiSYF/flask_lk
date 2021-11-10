@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8" />
+    <title>图片下载</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9">
+    <link rel="stylesheet" type="text/css" href="static/css/main.css" />
+    <link href="//cdn.bootcss.com/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"
+        charset="utf-8"></script>
+</head>
+
+<body>
+    <div class="container" style="padding-top:20px;">
+        <div class="col-xs-12 col-sm-10 col-lg-8 center-block" style="float: none;">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background: linear-gradient(to right,#8ae68a,#5ccdde,#b221ff);">
+                    <center>
+                        <font color="#000000"><b>图片下载</b></font>
+                    </center>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="icon-ghost"></i> ssh端口</span>
+                        <input name="port" id='port' class="form-control" placeholder="请输入要下载图片粮库的ssh端口号,如:41001"
+                            id="yxname">
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="icon-cup"></i> 粮库名称</span>
+                        <input name="name" id='name' class="form-control" placeholder="请输入粮库名称">
+                    </div>
+                    <br />
+                    <center>
+                        <div class="alert alert-warning">输入粮库端口号和粮库名</div>
+                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <button onclick="Startquery()" class="btn btn-danger btn-lg">上传筛选图片程序</button>
+                            </div>
+
+                        </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-lg-8 center-block" style="float: none;">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="background: linear-gradient(to right,#b221ff,#14b7ff,#8ae68a);">
+                    <center>
+                        <font color="#000000"><b> 查询结果展示 </b></font>
+                    </center>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="active">粮库名</th>
+                                <th class="success">进度</th>
+                                <th class="warning">下载</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <center>
+                <p style="text-align:center"><br>&copy; Powered by <a href="/">syf</a>!
+                </p>
+            </center>
+        </div>
+        <script type="text/javascript">
+            function Startquery() {
+                var name = document.getElementById("name").value;
+                var port = document.getElementById("port").value;
+                if (name.length == 0) {
+                    alert("请输入粮库名")
+                } else if (port.length == 0) {
+                    alert("请输入端口号")
+                } else {
+                    $.ajax({
+                        url: "/ssh",
+                        type: "get",
+                        data: { name: name, port: port },
+                        //dataType:"json",
+                        success: function (res) {
+                            console.log(123)
+                        }
+                    })
+                }
+                var html = `
+				    <tr>
+				    	<th class="active" >${name}</th>
+				    	<th class="success"></th>
+				    	<th class="warning" ></th>
+				    </tr>
+                `
+                $(".table-condensed thead").append(html)
+            }</script>
+</body>
+
+</html>
